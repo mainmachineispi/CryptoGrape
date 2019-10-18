@@ -1,3 +1,4 @@
+import sys
 from colorama import Fore, Back, Style
 print(Fore.CYAN + '[-] CryptoGrape starting...')
 print(Fore.GREEN)
@@ -12,3 +13,11 @@ print("              |___/|_|                             |_|")
 print("")
 print("V0.1")
 print(Style.RESET_ALL)
+try:
+    wallet = open('wallet.cg', 'rb')
+except FileNotFoundError:
+    print(Fore.RED + '[!] Wallet file not found.' + Style.RESET_ALL)
+    wallet = open('wallet.cg', 'w')
+    sys.exit(1)
+    
+print(Fore.GREEN + '[-] Wallet file found.')
