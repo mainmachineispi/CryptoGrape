@@ -1,4 +1,5 @@
-import sys
+import sys, random, hashlib
+from datetime import datetime # This still makes you type datetime.*, but otherwise i'd be typing datetime.datetime.*
 from colorama import Fore, Back, Style
 print(Fore.CYAN + '[-] CryptoGrape starting...')
 print(Fore.GREEN)
@@ -17,7 +18,17 @@ try:
     wallet = open('wallet.cg', 'rb')
 except FileNotFoundError:
     print(Fore.RED + '[!] Wallet file not found.' + Style.RESET_ALL)
-    wallet = open('wallet.cg', 'w')
-    sys.exit(1)
+    createWallet();
     
 print(Fore.GREEN + '[-] Wallet file found.')
+
+def createWallet():
+    print(Fore.CYAN + '[-] Generating wallet...')
+    wallet_id = hashlib.sha512(str(random.uniform(0,200)) + datetime.now()).hexdigest()
+    wallet = open('wallet.cg', 'w')
+    wallet.write("CGWallet")
+    wallet.write(wallet_id)
+    wallet.close()
+    print("WALLET ID: " + wallet_id)
+    print(Fore.GREEN + "Generation success! Restart CryptoGrape to continue.")
+    sys.exit(0)
